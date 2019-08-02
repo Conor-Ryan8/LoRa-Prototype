@@ -1,17 +1,17 @@
-#define ledPin 2
+#define LED 2
 
 void setup()
 {
     Serial.begin(115200); 
     Serial.print("AT+BAND=865200000\r\n");
-    pinMode(ledPin,OUTPUT);
+    pinMode(LED,OUTPUT);
 }
 
 void loop()
 {
-    Serial.println("AT+SEND=0,8,Testing!\r\n");
-    digitalWrite(ledPin,HIGH);
+    Serial.println("AT+SEND=0,4,Test\r\n");
+    digitalWrite(LED,HIGH);
     delay(200);
-    digitalWrite(ledPin, LOW);
+    digitalWrite(LED, LOW);
     delay(5000);
 }
