@@ -1,7 +1,14 @@
 import serial
 import time
 from datetime import datetime
+import RPi.GPIO as GPIO
 Counter = 1
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18,GPIO.OUT)
+GPIO.setup(23,GPIO.OUT)
+Buzzer = GPIO.PWM(23,2500)
 
 Radio = serial.Serial(
     
@@ -39,6 +46,7 @@ while(1):
             Now = datetime.now()
             Timestamp, Nanoseconds = str(Now).split('.')
             Date, Timestamp = Timestamp.split(' ')
+            GPIO.output(18,GPIO.HIGH)
             print('------------ Packet No:',Counter,' -------------')
             print('Data Received at',Timestamp)
             print('Address:',Address)
@@ -48,6 +56,12 @@ while(1):
             print('Signal to Noise Ratio:',SNR)
             print('________________________________________')
             Counter += 1
+            Buzzer.start(1)
+            time.sleep(0.05)
+            Buzzer.stop(1)
+            time.sleep(0.2)
+            GPIO.output(18,GPIO.LOW)
+            
         
         except:
             print('Read Error')
